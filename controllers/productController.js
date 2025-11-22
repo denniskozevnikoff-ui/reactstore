@@ -1,7 +1,7 @@
-const Product = require("../models/Product"); // Asegúrate que la P es mayúscula
+import Product from "../models/Product.js";
 
 // Obtener todos los productos
-exports.getProducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);
@@ -11,7 +11,7 @@ exports.getProducts = async (req, res) => {
 };
 
 // Obtener un producto por ID
-exports.getProduct = async (req, res) => {
+export const getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
@@ -22,15 +22,15 @@ exports.getProduct = async (req, res) => {
 };
 
 // Crear un nuevo producto
-exports.createProduct = async (req, res) => {
+export const createProduct = async (req, res) => {
   try {
-    const { name, price, description, imageUrl } = req.body; // <-- asegurarse que imageUrl se recibe
+    const { name, price, description, imageUrl } = req.body;
 
     const product = await Product.create({
       name,
       price,
       description,
-      imageUrl // <-- guardar la URL de la imagen
+      imageUrl
     });
 
     res.status(201).json(product);
@@ -40,7 +40,7 @@ exports.createProduct = async (req, res) => {
 };
 
 // Actualizar un producto
-exports.updateProduct = async (req, res) => {
+export const updateProduct = async (req, res) => {
   try {
     const { name, price, description, imageUrl } = req.body;
 
@@ -58,7 +58,7 @@ exports.updateProduct = async (req, res) => {
 };
 
 // Eliminar un producto
-exports.deleteProduct = async (req, res) => {
+export const deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Product deleted" });
