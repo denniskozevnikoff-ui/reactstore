@@ -1,18 +1,27 @@
-const jwt = require("jsonwebtoken");
+// middleware/authMiddleware.js
+import jwt from "jsonwebtoken";
 
-exports.auth = (req, res, next) => {
+// Middleware para verificar que el usuario esté logeado
+export const auth = (req, res, next) => {
   const header = req.headers.authorization;
-  if (!header) return res.status(401).json({ message: "No token provided" });
+  if (!header) {
+    return res.status(401).json({ message: "No token provided" });
+  }
 
   const token = header.split(" ")[1];
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
-    req.user = user;
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = user; // Guardamos info del usuario en req.user
     next();
-  });
+  } catch (err) {
+    return res.status(403).json({ message: "Invalid token" });
+  }
 };
 
-exports.adminOnly = (req, res, next) => {
-  if (req.user.role !== "admin") return res.status(403).json({ message: "Admin only" });
+// Middleware para verificar que sea administrador
+export const adminOnly = (req, res, next) => {
+  if (!req.user || req.user.role !== "admin") {
+    return res.status(403).json({ message: "Admin only" });
+  }
   next();
 };

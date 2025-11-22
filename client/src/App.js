@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import ProductDetail from "./components/ProductDetail";
+import AddProduct from "./components/AddProduct";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,18 @@ function App() {
   const [viewSignUp, setViewSignUp] = useState(false);
   const [viewLogin, setViewLogin] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [viewAddProduct, setViewAddProduct] = useState(false);
+
+  // Nuevo estado para usuario logeado
+  const [user, setUser] = useState(null);
+
+  // Revisar si hay token guardado al iniciar la app
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUser({ token }); // Solo guardamos token, podrías decodificarlo si quieres info del usuario
+    }
+  }, []);
 
   const addToCart = (product) => {
     setCartItems((prev) => {
@@ -38,19 +51,24 @@ function App() {
     setViewCheckout(false);
     setViewSignUp(false);
     setViewLogin(false);
+    setViewAddProduct(false);
     setSelectedProduct(null);
   };
 
- 
   const showSignUp = () => {
     setViewLogin(false);
     setViewSignUp(true);
   };
 
-  
   const showLogin = () => {
     setViewSignUp(false);
     setViewLogin(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    goToHome();
   };
 
   return (
@@ -62,38 +80,52 @@ function App() {
         </h2>
 
         <div style={{ display: "flex", gap: "10px" }}>
-          {!viewSignUp && !viewLogin && !viewCheckout && !selectedProduct && (
-            <button
-              className="header-button"
-              onClick={() => setViewCart(!viewCart)}
-            >
-              {viewCart ? "Back to Products" : `Cart (${cartItems.length})`}
-            </button>
-          )}
+          {!selectedProduct && !viewCheckout && !viewAddProduct && (
+            <>
+              <button
+                className="header-button"
+                onClick={() => setViewCart(!viewCart)}
+              >
+                {viewCart ? "Back to Products" : `Cart (${cartItems.length})`}
+              </button>
 
-          {!viewCart && !viewCheckout && !viewLogin && !selectedProduct && (
-            <button
-              className="header-button"
-              onClick={() => setViewSignUp(true)}
-            >
-              Sign Up
-            </button>
-          )}
+              {!user ? (
+                <>
+                  <button className="header-button" onClick={() => setViewSignUp(true)}>
+                    Sign Up
+                  </button>
+                  <button className="header-button" onClick={() => setViewLogin(true)}>
+                    Login
+                  </button>
+                </>
+              ) : (
+                <>
+                  <span style={{ alignSelf: "center" }}>Hello, User!</span>
+                  <button className="header-button" onClick={handleLogout}>
+                    Logout
+                  </button>
 
-          {!viewCart && !viewCheckout && !viewSignUp && !selectedProduct && (
-            <button
-              className="header-button"
-              onClick={() => setViewLogin(true)}
-            >
-              Login
-            </button>
+                  {/* Solo si es admin, mostramos Add Product */}
+                  <button className="header-button" onClick={() => setViewAddProduct(true)}>
+                    Add Product
+                  </button>
+                </>
+              )}
+            </>
           )}
         </div>
       </header>
 
-      {/* MAIN */}
+      {/* Main */}
       <main>
-        {selectedProduct ? (
+        {viewAddProduct ? (
+          <AddProduct
+            onProductAdded={(p) => {
+              alert("Product added!");
+              setViewAddProduct(false);
+            }}
+          />
+        ) : selectedProduct ? (
           <ProductDetail
             product={selectedProduct}
             addToCart={addToCart}
@@ -102,16 +134,18 @@ function App() {
         ) : viewLogin ? (
           <Login
             onLogin={(data) => {
-              console.log("User logged in:", data);
+              setUser({ token: data.token });
               setViewLogin(false);
+              goToHome();
             }}
             onShowSignUp={showSignUp}
           />
         ) : viewSignUp ? (
           <SignUp
             onSignUp={(data) => {
-              console.log("User signed up:", data);
+              alert("Sign up successful! Please login.");
               setViewSignUp(false);
+              setViewLogin(true); // Redirigimos a login después de signup
             }}
             onShowLogin={showLogin}
           />

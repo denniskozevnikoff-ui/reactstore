@@ -1,13 +1,38 @@
 import React, { useState } from "react";
-import "./Login.css"; // CSS separado
+import "./Login.css";
 
 const Login = ({ onLogin, onShowSignUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin({ email, password });
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // Guardamos el token en localStorage
+        localStorage.setItem("token", data.token);
+
+        // Llamamos a onLogin para actualizar estado en App y redirigir
+        onLogin(data); 
+      } else {
+        alert(data.message || "Login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,7 +63,9 @@ const Login = ({ onLogin, onShowSignUp }) => {
             />
           </div>
 
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
 
         <p className="login-footer">

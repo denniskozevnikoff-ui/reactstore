@@ -1,0 +1,59 @@
+.add-product-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-product-card {
+  background-color: #1e1e1e;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  width: 400px;
+  color: #fff;
+}
+
+.add-product-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-wrapper input,
+.input-wrapper textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: #2e2e2e;
+  color: #fff;
+  resize: none;
+}
+
+.add-product-button {
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, #00bfff, #1e90ff);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-product-button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #1e90ff, #00bfff);
+}
