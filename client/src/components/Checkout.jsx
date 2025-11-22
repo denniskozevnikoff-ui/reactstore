@@ -17,9 +17,8 @@ const Checkout = ({ cartItems, onConfirm }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí podríamos conectar a un backend en el futuro
     alert(`Thank you for your purchase, ${form.name}! Total: $${total.toFixed(2)}`);
-    onConfirm(); // limpiar carrito o regresar a productos
+    onConfirm(); 
   };
 
   return (

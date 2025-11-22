@@ -1,5 +1,5 @@
 import React from "react";
-import "./Cart.css"; // vamos a crear este CSS
+import "./Cart.css";
 
 const Cart = ({ cartItems, removeFromCart, onCheckout }) => {
 
@@ -15,7 +15,7 @@ const Cart = ({ cartItems, removeFromCart, onCheckout }) => {
         <div className="cart-items">
           {cartItems.map((item) => (
             <div key={item.id} className="cart-item">
-              <img src={item.image} alt={item.name} className="cart-item-image" />
+              <img src={item.imageUrl} alt={item.name} className="cart-item-image" />
               <div className="cart-item-details">
                 <h3>{item.name}</h3>
                 <p>Price: ${item.price.toFixed(2)}</p>

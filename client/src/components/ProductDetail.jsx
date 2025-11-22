@@ -11,7 +11,7 @@ const ProductDetail = ({ product, addToCart, goBack }) => {
       </button>
 
       <div className="product-detail-card">
-        <img src={product.image} alt={product.name} className="product-detail-image" />
+        <img src={product.imageUrl} alt={product.name} className="product-detail-image" />
         <div className="product-detail-info">
           <h1>{product.name}</h1>
           <p className="description">{product.description}</p>

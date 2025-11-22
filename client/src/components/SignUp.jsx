@@ -21,7 +21,7 @@ const SignUp = ({ onSignUp, onShowLogin }) => {
 
       if (res.ok) {
         localStorage.setItem("token", data.user ? data.user.token : "");
-        onShowLogin(); // Oculta SignUp y redirige a Home
+        onShowLogin(); 
       } else {
         alert(data.message || "SignUp failed");
       }

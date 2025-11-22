@@ -17,34 +17,38 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [viewAddProduct, setViewAddProduct] = useState(false);
 
-  // Nuevo estado para usuario logeado
+ 
   const [user, setUser] = useState(null);
 
-  // Revisar si hay token guardado al iniciar la app
+ 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setUser({ token }); // Solo guardamos token, podrías decodificarlo si quieres info del usuario
+      setUser({ token });
     }
   }, []);
 
   const addToCart = (product) => {
-    setCartItems((prev) => {
-      const exist = prev.find((item) => item.id === product.id);
-      if (exist) {
-        return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prev, { ...product, quantity: 1 }];
-      }
-    });
-    alert(`${product.name} added to the cart`);
-  };
+  setCartItems((prev) => {
+    const exist = prev.find((item) => item._id === product._id); 
+    if (exist) {
+      return prev.map((item) =>
+        item._id === product._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      return [...prev, { ...product, quantity: 1 }];
+    }
+  });
+  alert(`${product.name} added to the cart`);
+};
+
 
   const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
+  setCartItems((prev) => prev.filter((item) => item._id !== id));
+};
+
 
   const goToHome = () => {
     setViewCart(false);
@@ -145,7 +149,7 @@ function App() {
             onSignUp={(data) => {
               alert("Sign up successful! Please login.");
               setViewSignUp(false);
-              setViewLogin(true); // Redirigimos a login después de signup
+              setViewLogin(true); 
             }}
             onShowLogin={showLogin}
           />

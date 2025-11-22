@@ -5,7 +5,7 @@ const AddProduct = ({ onProductAdded }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [imageFile, setImageFile] = useState(""); // nombre del archivo en /images
+  const [imageFile, setImageFile] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -15,7 +15,7 @@ const AddProduct = ({ onProductAdded }) => {
     try {
       const token = localStorage.getItem("token");
 
-      // Generar la URL automática para la imagen
+      
       const imageUrl = imageFile ? `http://localhost:5000/images/${imageFile}` : "";
 
       const res = await fetch("http://localhost:5000/api/products", {
