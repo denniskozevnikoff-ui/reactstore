@@ -1,0 +1,111 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #ff7e5f, #feb47b);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.signup-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  color: #333;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.signup-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.signup-subtitle {
+  font-size: 1rem;
+  color: #636e72;
+  margin-bottom: 25px;
+  font-weight: 400;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border: 2px solid #dfe6e9;
+  border-radius: 50px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.input-wrapper:hover {
+  border-color: #ff7e5f;
+  transform: translateY(-4px);
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  color: #2d3436;
+  background-color: transparent;
+  border-radius: 50px;
+}
+
+.input-wrapper .input-icon {
+  position: absolute;
+  left: -35px; 
+  font-size: 1.5rem;
+  color: #ff7e5f;
+}
+
+.signup-button {
+  padding: 14px 0;
+  background-color: #ff7e5f;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.signup-button:hover {
+  background-color: #feb47b;
+  transform: translateY(-2px);
+}
+
+.signup-footer {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #636e72;
+}
+
+.signup-footer .signup-link {
+  color: #ff7e5f;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.signup-footer .signup-link:hover {
+  color: #feb47b;
+}
