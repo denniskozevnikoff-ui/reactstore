@@ -2,10 +2,10 @@
   max-width: 900px;
   margin: 20px auto;
   padding: 20px;
-  /* De azul fuerte a azul clarito */
+ 
   background: linear-gradient(135deg, #1e3c72, #2a5298);
   border-radius: 10px;
-  color: white; /* para que el texto contraste con el fondo azul */
+  color: white; 
 }
 
 .cart-items {
@@ -18,7 +18,7 @@
   display: flex;
   gap: 15px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.1); /* semitransparente sobre el gradiente */
+  background: rgba(255, 255, 255, 0.1); 
   border-radius: 8px;
   align-items: center;
 }

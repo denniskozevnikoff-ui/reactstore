@@ -19,7 +19,7 @@ const ProductList = ({ addToCart, onSelectProduct }) => {
       });
   }, []);
 
-  if (loading) return <p>Cargando productos...</p>;
+  if (loading) return <p>loading Products...</p>;
 
   return (
     <div>
