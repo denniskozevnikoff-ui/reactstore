@@ -10,8 +10,7 @@ const Home = ({ addToCart, onSelectProduct }) => {
         color: "#0077ff",
         fontWeight: "bold"
       }}>
-        Final Release – CI/CD update deployed from GitHub.
-      </p>
+      
 
       <ProductList 
         addToCart={addToCart}
