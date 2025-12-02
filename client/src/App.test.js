@@ -1,9 +1,12 @@
 // src/App.test.js
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders App component without crashing", () => {
+test("renders the Electronic Store header", () => {
   render(<App />);
-  // If render completes without throwing an error, the test passes.
+
+  // This matches the <h2>Electronic Store</h2> in App's header
+  expect(screen.getByText(/electronic store/i)).toBeInTheDocument();
 });
+

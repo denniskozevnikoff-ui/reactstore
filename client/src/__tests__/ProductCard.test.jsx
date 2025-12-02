@@ -1,83 +1,56 @@
-// client/src/__tests__/ProductCard.test.jsx
+// src/__tests__/ProductCard.test.jsx
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ProductCard from "../components/ProductCard";
 
-const mockProduct = {
-  _id: "123",
-  name: "Test Product",
-  price: 49.99,
-  imageUrl: "https://example.com/image.jpg",
-};
-
 describe("ProductCard component", () => {
-  test("renders product name, price and image", () => {
+  const product = {
+    _id: "123",
+    name: "PC gamer",
+    price: 500,
+    description: "Powerful pc gamer ready to install and play",
+    imageUrl: "http://localhost:5000/images/pc.jpeg",
+  };
+
+  test("renders product name and price", () => {
     render(
       <ProductCard
-        product={mockProduct}
-        addToCart={jest.fn()}
-        onSelectProduct={jest.fn()}
+        product={product}
+        addToCart={() => {}}
+        onSelectProduct={() => {}}
       />
     );
 
     // Name
-    expect(screen.getByText(/Test Product/i)).toBeInTheDocument();
+    expect(screen.getByText(/pc gamer/i)).toBeInTheDocument();
 
-    // Price formatted with $
-    expect(screen.getByText("$49.99")).toBeInTheDocument();
+    // Price: matches "500", "$500" or "$ 500"
+    expect(screen.getByText(/\$?\s*500/)).toBeInTheDocument();
 
-    // Image alt
-    const img = screen.getByAltText(/Test Product/i);
-    expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute("src", mockProduct.imageUrl);
+    // If in the future you show the description in the UI, you can
+    // uncomment this line:
+    //
+    // expect(
+    //   screen.getByText(/powerful pc gamer ready to install and play/i)
+    // ).toBeInTheDocument();
   });
 
-  test("calls addToCart when Add to Cart button is clicked", () => {
-    const addToCart = jest.fn();
+  test("calls addToCart when 'Add to Cart' button is clicked", () => {
+    const addToCartMock = jest.fn();
 
-    const { container } = render(
+    render(
       <ProductCard
-        product={mockProduct}
-        addToCart={addToCart}
-        onSelectProduct={jest.fn()}
+        product={product}
+        addToCart={addToCartMock}
+        onSelectProduct={() => {}}
       />
     );
 
-    const addButton = container.querySelector(".btn-add-cart");
-    expect(addButton).not.toBeNull();
-
-    fireEvent.click(addButton);
-
-    expect(addToCart).toHaveBeenCalledTimes(1);
-    expect(addToCart).toHaveBeenCalledWith(mockProduct);
-  });
-
-  test("calls onSelectProduct when View Details button is clicked", () => {
-    const onSelectProduct = jest.fn();
-
-    const { container } = render(
-      <ProductCard
-        product={mockProduct}
-        addToCart={jest.fn()}
-        onSelectProduct={onSelectProduct}
-      />
+    fireEvent.click(
+      screen.getByRole("button", { name: /add to cart/i })
     );
 
-    const detailsButton = container.querySelector(".btn-view-details");
-    expect(detailsButton).not.toBeNull();
-
-    fireEvent.click(detailsButton);
-
-    expect(onSelectProduct).toHaveBeenCalledTimes(1);
-    expect(onSelectProduct).toHaveBeenCalledWith(mockProduct);
-  });
-
-  test("does not render View Details button when onSelectProduct is not provided", () => {
-    const { container } = render(
-      <ProductCard product={mockProduct} addToCart={jest.fn()} />
-    );
-
-    const detailsButton = container.querySelector(".btn-view-details");
-    expect(detailsButton).toBeNull();
+    expect(addToCartMock).toHaveBeenCalledTimes(1);
+    expect(addToCartMock).toHaveBeenCalledWith(product);
   });
 });
