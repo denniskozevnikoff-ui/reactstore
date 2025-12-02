@@ -3,10 +3,21 @@ import ProductList from "../components/ProductList";
 
 const Home = ({ addToCart, onSelectProduct }) => {
   return (
-    <ProductList 
-      addToCart={addToCart} 
-      onSelectProduct={onSelectProduct} 
-    />
+    <div>
+      <p className="ci-note" style={{ 
+        textAlign: "center",
+        marginTop: "10px",
+        color: "#0077ff",
+        fontWeight: "bold"
+      }}>
+        Final Release – CI/CD update deployed from GitHub.
+      </p>
+
+      <ProductList 
+        addToCart={addToCart}
+        onSelectProduct={onSelectProduct}
+      />
+    </div>
   );
 };
 
